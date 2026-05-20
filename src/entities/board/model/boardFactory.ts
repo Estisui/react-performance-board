@@ -4,7 +4,14 @@ export const BOARD_WIDTH = 2800;
 export const BOARD_HEIGHT = 1700;
 export const DEFAULT_ITEM_COUNT = 180;
 
-const ITEM_COLORS = ['#f6c85f', '#7bdff2', '#b2f7ef', '#f7a1a1', '#cdb4db', '#bde0fe'];
+const ITEM_COLORS = [
+  'rgba(220, 233, 245, 0.42)',
+  'rgba(229, 240, 237, 0.4)',
+  'rgba(241, 232, 215, 0.42)',
+  'rgba(234, 223, 233, 0.4)',
+  'rgba(220, 227, 241, 0.42)',
+  'rgba(232, 236, 228, 0.4)',
+];
 const ITEM_KINDS: BoardItemKind[] = ['note', 'task', 'chart', 'warning'];
 
 let nextId = 1;
