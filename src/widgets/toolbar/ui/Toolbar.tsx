@@ -18,14 +18,17 @@ export function Toolbar({ itemCount, onGenerate }: ToolbarProps) {
 
       <div className="toolbarActions">
         <div className="presetGroup" aria-label="Количество элементов">
-          <button type="button" onClick={() => onGenerate(80)}>
-            80
+          <button type="button" className="presetButton" onClick={() => onGenerate(80)}>
+            <span className="presetName">Light</span>
+            <span className="presetValue">80</span>
           </button>
-          <button type="button" onClick={() => onGenerate(DEFAULT_ITEM_COUNT)}>
-            {DEFAULT_ITEM_COUNT}
+          <button type="button" className="presetButton" onClick={() => onGenerate(DEFAULT_ITEM_COUNT)}>
+            <span className="presetName">Standard</span>
+            <span className="presetValue">{DEFAULT_ITEM_COUNT}</span>
           </button>
-          <button type="button" onClick={() => onGenerate(420)}>
-            Heavy 420
+          <button type="button" className="presetButton" onClick={() => onGenerate(420)}>
+            <span className="presetName">Stress</span>
+            <span className="presetValue">420</span>
           </button>
         </div>
         <span className="itemCount">{itemCount} elements</span>
