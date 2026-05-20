@@ -10,7 +10,7 @@ type BoardCardProps = {
 };
 
 export function BoardCard({ item, stats, allItems, onStartDrag }: BoardCardProps) {
-  const syntheticValue = addSyntheticRenderCost(item, stats);
+  addSyntheticRenderCost(item, stats);
   const isSelected = stats.selectedId === item.id;
   const isDragging = stats.draggingId === item.id;
   const neighborCount = allItems.filter((candidate) => Math.abs(candidate.x - item.x) < 230).length;
@@ -20,7 +20,6 @@ export function BoardCard({ item, stats, allItems, onStartDrag }: BoardCardProps
       className={`boardCard ${isSelected ? 'selected' : ''} ${isDragging ? 'dragging' : ''}`}
       style={{
         width: item.width,
-        height: item.height,
         transform: `translate(${item.x}px, ${item.y}px)`,
         backgroundColor: item.color,
       }}
@@ -33,8 +32,7 @@ export function BoardCard({ item, stats, allItems, onStartDrag }: BoardCardProps
       <h2>{item.title}</h2>
       <p>{item.body}</p>
       <footer>
-        <span>near {neighborCount}</span>
-        <span>cost {syntheticValue}</span>
+        <span>Соседей: {neighborCount}</span>
       </footer>
     </article>
   );

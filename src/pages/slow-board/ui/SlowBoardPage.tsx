@@ -1,5 +1,5 @@
 import { PointerEvent, useEffect, useRef, useState } from 'react';
-import { Board, createBoardItem, createItems, DEFAULT_ITEM_COUNT, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
+import { Board, createItems, DEFAULT_ITEM_COUNT, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
 import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
@@ -92,19 +92,6 @@ export function SlowBoardPage() {
     boardRef.current?.setPointerCapture(event.pointerId);
   };
 
-  const handleAddItem = () => {
-    setItems([...items, createBoardItem(items.length)]);
-  };
-
-  const handleRemoveSelected = () => {
-    if (selectedId === null) {
-      return;
-    }
-
-    setItems(items.filter((item) => item.id !== selectedId));
-    setSelectedId(null);
-  };
-
   const handleGenerate = (count: number) => {
     setItems(createItems(count, true));
     setSelectedId(null);
@@ -116,10 +103,7 @@ export function SlowBoardPage() {
     <main className="appShell">
       <Toolbar
         itemCount={items.length}
-        onAddItem={handleAddItem}
-        onRemoveSelected={handleRemoveSelected}
         onGenerate={handleGenerate}
-        selectedId={selectedId}
       />
       <section className="workspace">
         <Board

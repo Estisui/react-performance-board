@@ -2,13 +2,10 @@ import { DEFAULT_ITEM_COUNT } from '../../../entities/board';
 
 type ToolbarProps = {
   itemCount: number;
-  selectedId: number | null;
-  onAddItem: () => void;
-  onRemoveSelected: () => void;
   onGenerate: (count: number) => void;
 };
 
-export function Toolbar({ itemCount, selectedId, onAddItem, onRemoveSelected, onGenerate }: ToolbarProps) {
+export function Toolbar({ itemCount, onGenerate }: ToolbarProps) {
   return (
     <header className="toolbar">
       <div className="brandBlock">
@@ -20,12 +17,6 @@ export function Toolbar({ itemCount, selectedId, onAddItem, onRemoveSelected, on
       </div>
 
       <div className="toolbarActions">
-        <button type="button" onClick={onAddItem}>
-          Add card
-        </button>
-        <button type="button" onClick={onRemoveSelected} disabled={selectedId === null}>
-          Remove selected
-        </button>
         <button type="button" onClick={() => onGenerate(80)}>
           80
         </button>

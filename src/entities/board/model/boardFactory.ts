@@ -19,8 +19,8 @@ let nextId = 1;
 export function createBoardItem(index: number): BoardItem {
   const column = index % 24;
   const row = Math.floor(index / 24);
-  const width = 148 + (index % 4) * 18;
-  const height = 108 + (index % 3) * 18;
+  const width = 164 + (index % 4) * 16;
+  const height = 132 + (index % 3) * 16;
 
   return {
     id: nextId++,
@@ -30,8 +30,8 @@ export function createBoardItem(index: number): BoardItem {
     height,
     color: ITEM_COLORS[index % ITEM_COLORS.length],
     kind: ITEM_KINDS[index % ITEM_KINDS.length],
-    title: `Card ${index + 1}`,
-    body: `Элемент доски: frequent state updates, no memoization, render cost ${index % 7}.`,
+    title: `Элемент ${index + 1}`,
+    body: 'Тестовая карточка рабочей области для проверки частых обновлений интерфейса.',
   };
 }
 
