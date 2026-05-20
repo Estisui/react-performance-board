@@ -1,15 +1,17 @@
 import { DEFAULT_ITEM_COUNT } from '../../../entities/board';
+import type { BoardMode } from '../../../app/App';
 
 type ToolbarProps = {
+  mode: BoardMode;
   itemCount: number;
+  onModeChange: (mode: BoardMode) => void;
   onGenerate: (count: number) => void;
 };
 
-export function Toolbar({ itemCount, onGenerate }: ToolbarProps) {
+export function Toolbar({ mode, itemCount, onModeChange, onGenerate }: ToolbarProps) {
   return (
     <header className="toolbar">
       <div className="brandBlock">
-        <span className="modePill">Slow / Базовый режим</span>
         <div>
           <h1>React Performance Board</h1>
           <p>Демонстрационная доска с намеренно неоптимизированными обновлениями состояния</p>
@@ -17,6 +19,24 @@ export function Toolbar({ itemCount, onGenerate }: ToolbarProps) {
       </div>
 
       <div className="toolbarActions">
+        <div className="modeSwitch" aria-label="Режим работы">
+          <button
+            type="button"
+            className={mode === 'baseline' ? 'active' : ''}
+            aria-pressed={mode === 'baseline'}
+            onClick={() => onModeChange('baseline')}
+          >
+            Baseline
+          </button>
+          <button
+            type="button"
+            className={mode === 'optimized' ? 'active' : ''}
+            aria-pressed={mode === 'optimized'}
+            onClick={() => onModeChange('optimized')}
+          >
+            Optimized
+          </button>
+        </div>
         <div className="presetGroup" aria-label="Количество элементов">
           <button type="button" className="presetButton" onClick={() => onGenerate(80)}>
             <span className="presetName">Light</span>

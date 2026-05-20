@@ -75,6 +75,10 @@ button:disabled {
   flex-direction: column;
 }
 
+.appShell[data-mode="optimized"] {
+  --accent: #3f786b;
+}
+
 .toolbar {
   position: sticky;
   top: 0;
@@ -104,21 +108,6 @@ button:disabled {
   min-width: 0;
 }
 
-.modePill {
-  flex: 0 0 auto;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 999px;
-  background:
-    linear-gradient(145deg, rgba(43, 58, 71, 0.86), rgba(80, 106, 122, 0.76));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 10px 22px rgba(43, 58, 71, 0.18);
-  color: #f7fbfd;
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 8px 12px;
-}
-
 .brandBlock h1 {
   margin: 0;
   font-size: 1.15rem;
@@ -137,6 +126,57 @@ button:disabled {
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 14px;
+}
+
+.modeSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, rgba(43, 58, 71, 0.18), rgba(255, 255, 255, 0.34));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    0 10px 24px rgba(43, 58, 71, 0.1);
+  padding: 4px;
+}
+
+.modeSwitch button {
+  min-height: 32px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: rgba(43, 58, 71, 0.68);
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 0 11px;
+}
+
+.modeSwitch button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.38);
+  box-shadow: none;
+  transform: none;
+}
+
+.modeSwitch button.active {
+  border-color: rgba(255, 255, 255, 0.54);
+  background:
+    linear-gradient(145deg, rgba(43, 58, 71, 0.92), rgba(80, 106, 122, 0.82));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 10px 22px rgba(43, 58, 71, 0.2);
+  color: #f7fbfd;
+}
+
+.modeSwitch button.active:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.64);
+  background:
+    linear-gradient(145deg, rgba(43, 58, 71, 0.96), rgba(80, 106, 122, 0.88));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 10px 22px rgba(43, 58, 71, 0.2);
+  color: #f7fbfd;
 }
 
 .presetGroup {

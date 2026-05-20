@@ -3,10 +3,16 @@ import { Board, createItems, DEFAULT_ITEM_COUNT, BOARD_HEIGHT, BOARD_WIDTH } fro
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
 import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
+import type { BoardMode } from '../../../app/App';
 
 let appRenderCounter = 0;
 
-export function SlowBoardPage() {
+type SlowBoardPageProps = {
+  mode: BoardMode;
+  onModeChange: (mode: BoardMode) => void;
+};
+
+export function SlowBoardPage({ mode, onModeChange }: SlowBoardPageProps) {
   appRenderCounter += 1;
 
   const [items, setItems] = useState<BoardItem[]>(() => createItems(DEFAULT_ITEM_COUNT));
@@ -100,9 +106,11 @@ export function SlowBoardPage() {
   };
 
   return (
-    <main className="appShell">
+    <main className="appShell" data-mode={mode}>
       <Toolbar
+        mode={mode}
         itemCount={items.length}
+        onModeChange={onModeChange}
         onGenerate={handleGenerate}
       />
       <section className="workspace">
