@@ -1,10 +1,17 @@
 import { BoardStats } from '../../../entities/board';
+import type { BoardMode } from '../../../shared/config/boardMode';
 
 type MetricsPanelProps = {
+  mode: BoardMode;
   stats: BoardStats;
 };
 
-export function MetricsPanel({ stats }: MetricsPanelProps) {
+const MODE_NOTES: Record<BoardMode, string> = {
+  baseline: 'Базовая версия хранит все элементы в одном состоянии и обновляет его при каждом движении указателя.',
+  optimized: 'Оптимизированная версия сохраняет ссылки неизмененных элементов и рендерит только видимую часть доски.',
+};
+
+export function MetricsPanel({ mode, stats }: MetricsPanelProps) {
   return (
     <aside className="metricsPanel" aria-label="Performance metrics">
       <h2>Metrics / Метрики</h2>
@@ -41,8 +48,14 @@ export function MetricsPanel({ stats }: MetricsPanelProps) {
           <dt>Dragging</dt>
           <dd>{stats.draggingId ?? 'none'}</dd>
         </div>
+        {typeof stats.visibleItems === 'number' && (
+          <div>
+            <dt>Visible</dt>
+            <dd>{stats.visibleItems}</dd>
+          </div>
+        )}
       </dl>
-      <p>Базовая версия специально хранит все элементы в одном состоянии и обновляет его при каждом движении указателя.</p>
+      <p>{MODE_NOTES[mode]}</p>
     </aside>
   );
 }

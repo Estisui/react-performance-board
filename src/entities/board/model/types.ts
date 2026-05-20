@@ -26,6 +26,7 @@ export type BoardStats = {
   averageFrameMs: number;
   maxFrameMs: number;
   droppedFrames: number;
+  visibleItems?: number;
   selectedId: number | null;
   draggingId: number | null;
 };

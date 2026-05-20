@@ -1,5 +1,5 @@
 import { PointerEvent, useEffect, useRef, useState } from 'react';
-import { Board, createItems, DEFAULT_ITEM_COUNT, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
+import { Board, createItems, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
 import type { BoardMode } from '../../../shared/config/boardMode';
 import { useFrameMetrics } from '../../../shared/lib/performance';
@@ -12,17 +12,31 @@ const BENCHMARK_DURATION_MS = 10000;
 
 type BaselineBoardModeProps = {
   mode: BoardMode;
+  itemCount: number;
+  showRenderHeat: boolean;
+  onItemCountChange: (count: number) => void;
   onModeChange: (mode: BoardMode) => void;
+  onToggleRenderHeat: () => void;
 };
 
-export function BaselineBoardMode({ mode, onModeChange }: BaselineBoardModeProps) {
+export function resetBaselineRenderCounter() {
+  appRenderCounter = 0;
+}
+
+export function BaselineBoardMode({
+  mode,
+  itemCount,
+  showRenderHeat,
+  onItemCountChange,
+  onModeChange,
+  onToggleRenderHeat,
+}: BaselineBoardModeProps) {
   appRenderCounter += 1;
 
-  const [items, setItems] = useState<BoardItem[]>(() => createItems(DEFAULT_ITEM_COUNT));
+  const [items, setItems] = useState<BoardItem[]>(() => createItems(itemCount, true));
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [pointerUpdates, setPointerUpdates] = useState(0);
-  const [showRenderHeat, setShowRenderHeat] = useState(false);
   const [isBenchmarkRunning, setIsBenchmarkRunning] = useState(false);
   const [benchmarkStatus, setBenchmarkStatus] = useState('Start a 10-second manual run, then drag one card.');
   const frameMetrics = useFrameMetrics();
@@ -99,6 +113,7 @@ export function BaselineBoardMode({ mode, onModeChange }: BaselineBoardModeProps
   };
 
   const handleGenerate = (count: number) => {
+    onItemCountChange(count);
     setItems(createItems(count, true));
     setSelectedId(null);
     setDragState(null);
@@ -147,10 +162,10 @@ export function BaselineBoardMode({ mode, onModeChange }: BaselineBoardModeProps
           status={benchmarkStatus}
           isRunning={isBenchmarkRunning}
           showRenderHeat={showRenderHeat}
-          onToggleRenderHeat={() => setShowRenderHeat((value) => !value)}
+          onToggleRenderHeat={onToggleRenderHeat}
           onRunBenchmark={handleRunBenchmark}
         />
-        <MetricsPanel stats={stats} />
+        <MetricsPanel mode={mode} stats={stats} />
       </section>
     </main>
   );

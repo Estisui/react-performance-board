@@ -1,5 +1,8 @@
+import { useRef, useState } from 'react';
+import { DEFAULT_ITEM_COUNT } from '../../../entities/board';
 import type { BoardMode } from '../../../shared/config/boardMode';
-import { BaselineBoardMode } from './BaselineBoardMode';
+import { BaselineBoardMode, resetBaselineRenderCounter } from './BaselineBoardMode';
+import { OptimizedBoardMode, resetOptimizedRenderCounter } from './OptimizedBoardMode';
 
 type PerformanceBoardPageProps = {
   mode: BoardMode;
@@ -7,6 +10,45 @@ type PerformanceBoardPageProps = {
 };
 
 export function PerformanceBoardPage({ mode, onModeChange }: PerformanceBoardPageProps) {
-  return <BaselineBoardMode mode={mode} onModeChange={onModeChange} />;
-}
+  const [itemCount, setItemCount] = useState(DEFAULT_ITEM_COUNT);
+  const [showRenderHeat, setShowRenderHeat] = useState(false);
+  const previousMode = useRef<BoardMode | null>(null);
 
+  if (previousMode.current !== mode) {
+    if (mode === 'optimized') {
+      resetOptimizedRenderCounter();
+    } else {
+      resetBaselineRenderCounter();
+    }
+
+    previousMode.current = mode;
+  }
+
+  const handleToggleRenderHeat = () => {
+    setShowRenderHeat((value) => !value);
+  };
+
+  if (mode === 'optimized') {
+    return (
+      <OptimizedBoardMode
+        mode={mode}
+        itemCount={itemCount}
+        showRenderHeat={showRenderHeat}
+        onItemCountChange={setItemCount}
+        onModeChange={onModeChange}
+        onToggleRenderHeat={handleToggleRenderHeat}
+      />
+    );
+  }
+
+  return (
+    <BaselineBoardMode
+      mode={mode}
+      itemCount={itemCount}
+      showRenderHeat={showRenderHeat}
+      onItemCountChange={setItemCount}
+      onModeChange={onModeChange}
+      onToggleRenderHeat={handleToggleRenderHeat}
+    />
+  );
+}
