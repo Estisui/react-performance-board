@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { SlowBoardPage } from '../pages/slow-board';
-
-export type BoardMode = 'baseline' | 'optimized';
+import { PerformanceBoardPage } from '../pages/performance-board';
+import type { BoardMode } from '../shared/config/boardMode';
 
 export function App() {
   const [mode, setMode] = useState<BoardMode>('baseline');
 
-  return <SlowBoardPage mode={mode} onModeChange={setMode} />;
+  return <PerformanceBoardPage mode={mode} onModeChange={setMode} />;
 }

@@ -23,6 +23,9 @@ export type BoardStats = {
   renderCount: number;
   pointerUpdates: number;
   fps: number;
+  averageFrameMs: number;
+  maxFrameMs: number;
+  droppedFrames: number;
   selectedId: number | null;
   draggingId: number | null;
 };

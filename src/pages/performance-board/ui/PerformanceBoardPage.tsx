@@ -1,50 +1,35 @@
-import { PointerEvent, useEffect, useRef, useState } from 'react';
+import { PointerEvent, useRef, useState } from 'react';
 import { Board, createItems, DEFAULT_ITEM_COUNT, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
+import type { BoardMode } from '../../../shared/config/boardMode';
+import { useFrameMetrics } from '../../../shared/lib/performance';
 import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
-import type { BoardMode } from '../../../app/App';
 
 let appRenderCounter = 0;
 
-type SlowBoardPageProps = {
+type PerformanceBoardPageProps = {
   mode: BoardMode;
   onModeChange: (mode: BoardMode) => void;
 };
 
-export function SlowBoardPage({ mode, onModeChange }: SlowBoardPageProps) {
+export function PerformanceBoardPage({ mode, onModeChange }: PerformanceBoardPageProps) {
   appRenderCounter += 1;
 
   const [items, setItems] = useState<BoardItem[]>(() => createItems(DEFAULT_ITEM_COUNT));
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [pointerUpdates, setPointerUpdates] = useState(0);
-  const [fps, setFps] = useState(60);
+  const frameMetrics = useFrameMetrics();
   const boardRef = useRef<HTMLDivElement | null>(null);
-  const frameTimes = useRef<number[]>([]);
-
-  useEffect(() => {
-    let frameHandle = 0;
-    let lastTime = performance.now();
-
-    const measureFrame = (time: number) => {
-      const delta = time - lastTime;
-      lastTime = time;
-      frameTimes.current = [...frameTimes.current.slice(-30), delta];
-      const average = frameTimes.current.reduce((sum, value) => sum + value, 0) / frameTimes.current.length;
-      setFps(Math.round(1000 / average));
-      frameHandle = requestAnimationFrame(measureFrame);
-    };
-
-    frameHandle = requestAnimationFrame(measureFrame);
-
-    return () => cancelAnimationFrame(frameHandle);
-  }, []);
 
   const stats: BoardStats = {
     renderCount: appRenderCounter,
     pointerUpdates,
-    fps,
+    fps: frameMetrics.fps,
+    averageFrameMs: frameMetrics.averageFrameMs,
+    maxFrameMs: frameMetrics.maxFrameMs,
+    droppedFrames: frameMetrics.droppedFrames,
     selectedId,
     draggingId: dragState?.itemId ?? null,
   };
@@ -122,7 +107,7 @@ export function SlowBoardPage({ mode, onModeChange }: SlowBoardPageProps) {
           onPointerUp={handlePointerUp}
           onStartDrag={handleStartDrag}
         />
-        <MetricsPanel stats={stats} itemCount={items.length} />
+        <MetricsPanel stats={stats} />
       </section>
     </main>
   );

@@ -1,5 +1,5 @@
 import { DEFAULT_ITEM_COUNT } from '../../../entities/board';
-import type { BoardMode } from '../../../app/App';
+import type { BoardMode } from '../../../shared/config/boardMode';
 
 type ToolbarProps = {
   mode: BoardMode;

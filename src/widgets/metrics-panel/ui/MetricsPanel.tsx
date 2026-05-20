@@ -2,10 +2,9 @@ import { BoardStats } from '../../../entities/board';
 
 type MetricsPanelProps = {
   stats: BoardStats;
-  itemCount: number;
 };
 
-export function MetricsPanel({ stats, itemCount }: MetricsPanelProps) {
+export function MetricsPanel({ stats }: MetricsPanelProps) {
   return (
     <aside className="metricsPanel" aria-label="Performance metrics">
       <h2>Metrics / Метрики</h2>
@@ -23,16 +22,24 @@ export function MetricsPanel({ stats, itemCount }: MetricsPanelProps) {
           <dd>{stats.pointerUpdates}</dd>
         </div>
         <div>
+          <dt>Avg frame</dt>
+          <dd>{stats.averageFrameMs} ms</dd>
+        </div>
+        <div>
+          <dt>Max frame</dt>
+          <dd>{stats.maxFrameMs} ms</dd>
+        </div>
+        <div>
+          <dt>Dropped frames</dt>
+          <dd>{stats.droppedFrames}</dd>
+        </div>
+        <div>
           <dt>Selected</dt>
           <dd>{stats.selectedId ?? 'none'}</dd>
         </div>
         <div>
           <dt>Dragging</dt>
           <dd>{stats.draggingId ?? 'none'}</dd>
-        </div>
-        <div>
-          <dt>Elements</dt>
-          <dd>{itemCount}</dd>
         </div>
       </dl>
       <p>Базовая версия специально хранит все элементы в одном состоянии и обновляет его при каждом движении указателя.</p>
