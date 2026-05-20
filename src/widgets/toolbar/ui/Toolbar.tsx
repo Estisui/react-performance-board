@@ -38,20 +38,34 @@ export function Toolbar({ mode, itemCount, onModeChange, onGenerate }: ToolbarPr
           </button>
         </div>
         <div className="presetGroup" aria-label="Количество элементов">
-          <button type="button" className="presetButton" onClick={() => onGenerate(80)}>
+          <button
+            type="button"
+            className={`presetButton ${itemCount === 80 ? 'active' : ''}`}
+            aria-pressed={itemCount === 80}
+            onClick={() => onGenerate(80)}
+          >
             <span className="presetName">Light</span>
             <span className="presetValue">80</span>
           </button>
-          <button type="button" className="presetButton" onClick={() => onGenerate(DEFAULT_ITEM_COUNT)}>
+          <button
+            type="button"
+            className={`presetButton ${itemCount === DEFAULT_ITEM_COUNT ? 'active' : ''}`}
+            aria-pressed={itemCount === DEFAULT_ITEM_COUNT}
+            onClick={() => onGenerate(DEFAULT_ITEM_COUNT)}
+          >
             <span className="presetName">Standard</span>
             <span className="presetValue">{DEFAULT_ITEM_COUNT}</span>
           </button>
-          <button type="button" className="presetButton" onClick={() => onGenerate(420)}>
+          <button
+            type="button"
+            className={`presetButton ${itemCount === 420 ? 'active' : ''}`}
+            aria-pressed={itemCount === 420}
+            onClick={() => onGenerate(420)}
+          >
             <span className="presetName">Stress</span>
             <span className="presetValue">420</span>
           </button>
         </div>
-        <span className="itemCount">{itemCount} elements</span>
       </div>
     </header>
   );
