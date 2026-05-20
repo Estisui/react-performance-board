@@ -10,9 +10,10 @@ type BoardProps = {
   onPointerMove: (event: PointerEvent<HTMLDivElement>) => void;
   onPointerUp: (event: PointerEvent<HTMLDivElement>) => void;
   onStartDrag: (event: PointerEvent<HTMLElement>, item: BoardItem) => void;
+  showRenderHeat: boolean;
 };
 
-export function Board({ items, stats, boardRef, onPointerMove, onPointerUp, onStartDrag }: BoardProps) {
+export function Board({ items, stats, boardRef, onPointerMove, onPointerUp, onStartDrag, showRenderHeat }: BoardProps) {
   return (
     <div
       className="boardViewport"
@@ -24,7 +25,14 @@ export function Board({ items, stats, boardRef, onPointerMove, onPointerUp, onSt
       <div className="boardCanvas" style={{ width: BOARD_WIDTH, height: BOARD_HEIGHT }}>
         <div className="gridOverlay" />
         {items.map((item) => (
-          <BoardCard key={item.id} item={item} stats={stats} allItems={items} onStartDrag={onStartDrag} />
+          <BoardCard
+            key={item.id}
+            item={item}
+            stats={stats}
+            allItems={items}
+            onStartDrag={onStartDrag}
+            showRenderHeat={showRenderHeat}
+          />
         ))}
       </div>
     </div>

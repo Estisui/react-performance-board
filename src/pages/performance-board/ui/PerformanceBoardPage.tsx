@@ -1,12 +1,14 @@
-import { PointerEvent, useRef, useState } from 'react';
+import { PointerEvent, useEffect, useRef, useState } from 'react';
 import { Board, createItems, DEFAULT_ITEM_COUNT, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
 import type { BoardMode } from '../../../shared/config/boardMode';
 import { useFrameMetrics } from '../../../shared/lib/performance';
+import { BenchmarkPanel } from '../../../widgets/benchmark-panel';
 import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
 
 let appRenderCounter = 0;
+const BENCHMARK_DURATION_MS = 10000;
 
 type PerformanceBoardPageProps = {
   mode: BoardMode;
@@ -20,8 +22,20 @@ export function PerformanceBoardPage({ mode, onModeChange }: PerformanceBoardPag
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [pointerUpdates, setPointerUpdates] = useState(0);
+  const [showRenderHeat, setShowRenderHeat] = useState(false);
+  const [isBenchmarkRunning, setIsBenchmarkRunning] = useState(false);
+  const [benchmarkStatus, setBenchmarkStatus] = useState('Start a 10-second manual run, then drag one card.');
   const frameMetrics = useFrameMetrics();
   const boardRef = useRef<HTMLDivElement | null>(null);
+  const benchmarkTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (benchmarkTimeoutRef.current !== null) {
+        window.clearTimeout(benchmarkTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const stats: BoardStats = {
     renderCount: appRenderCounter,
@@ -90,6 +104,24 @@ export function PerformanceBoardPage({ mode, onModeChange }: PerformanceBoardPag
     setPointerUpdates(0);
   };
 
+  const handleRunBenchmark = () => {
+    if (isBenchmarkRunning) {
+      return;
+    }
+
+    setPointerUpdates(0);
+    setSelectedId(null);
+    setDragState(null);
+    setIsBenchmarkRunning(true);
+    setBenchmarkStatus('Recording for 10 seconds. Drag one card diagonally now.');
+
+    benchmarkTimeoutRef.current = window.setTimeout(() => {
+      setIsBenchmarkRunning(false);
+      setDragState(null);
+      setBenchmarkStatus('Run complete. Record FPS, frame time, renders, and pointer updates.');
+    }, BENCHMARK_DURATION_MS);
+  };
+
   return (
     <main className="appShell" data-mode={mode}>
       <Toolbar
@@ -106,6 +138,16 @@ export function PerformanceBoardPage({ mode, onModeChange }: PerformanceBoardPag
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onStartDrag={handleStartDrag}
+          showRenderHeat={showRenderHeat}
+        />
+        <BenchmarkPanel
+          mode={mode}
+          itemCount={items.length}
+          status={benchmarkStatus}
+          isRunning={isBenchmarkRunning}
+          showRenderHeat={showRenderHeat}
+          onToggleRenderHeat={() => setShowRenderHeat((value) => !value)}
+          onRunBenchmark={handleRunBenchmark}
         />
         <MetricsPanel stats={stats} />
       </section>
