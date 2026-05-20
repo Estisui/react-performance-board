@@ -17,15 +17,17 @@ export function Toolbar({ itemCount, onGenerate }: ToolbarProps) {
       </div>
 
       <div className="toolbarActions">
-        <button type="button" onClick={() => onGenerate(80)}>
-          80
-        </button>
-        <button type="button" onClick={() => onGenerate(DEFAULT_ITEM_COUNT)}>
-          {DEFAULT_ITEM_COUNT}
-        </button>
-        <button type="button" onClick={() => onGenerate(420)}>
-          Heavy 420
-        </button>
+        <div className="presetGroup" aria-label="Количество элементов">
+          <button type="button" onClick={() => onGenerate(80)}>
+            80
+          </button>
+          <button type="button" onClick={() => onGenerate(DEFAULT_ITEM_COUNT)}>
+            {DEFAULT_ITEM_COUNT}
+          </button>
+          <button type="button" onClick={() => onGenerate(420)}>
+            Heavy 420
+          </button>
+        </div>
         <span className="itemCount">{itemCount} elements</span>
       </div>
     </header>
