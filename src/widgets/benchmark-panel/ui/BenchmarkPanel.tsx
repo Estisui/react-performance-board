@@ -3,6 +3,7 @@ import type { BoardMode } from '../../../shared/config/boardMode';
 type BenchmarkPanelProps = {
   mode: BoardMode;
   itemCount: number;
+  durationMs: number;
   status: string;
   isRunning: boolean;
   result: BenchmarkResult | null;
@@ -28,6 +29,7 @@ const MODE_LABELS: Record<BoardMode, string> = {
 export function BenchmarkPanel({
   mode,
   itemCount,
+  durationMs,
   status,
   isRunning,
   result,
@@ -46,7 +48,7 @@ export function BenchmarkPanel({
 
       <div className="benchmarkActions">
         <button type="button" className="benchmarkButton" onClick={onRunBenchmark} disabled={isRunning}>
-          {isRunning ? 'Recording...' : 'Start 10s run'}
+          {isRunning ? 'Recording...' : `Start ${Math.round(durationMs / 1000)}s run`}
         </button>
         <label className="toggleControl">
           <input type="checkbox" checked={showRenderHeat} onChange={onToggleRenderHeat} />

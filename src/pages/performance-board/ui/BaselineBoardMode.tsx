@@ -1,6 +1,7 @@
 import { PointerEvent, useEffect, useRef, useState } from 'react';
 import { Board, createItems, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
+import { getBenchmarkDurationMs } from '../../../shared/config/benchmark';
 import type { BoardMode } from '../../../shared/config/boardMode';
 import { getCardRenderCount, resetCardRenderCount, useFrameMetrics } from '../../../shared/lib/performance';
 import { BenchmarkPanel } from '../../../widgets/benchmark-panel';
@@ -9,7 +10,6 @@ import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
 
 let appRenderCounter = 0;
-const BENCHMARK_DURATION_MS = 10000;
 
 type BaselineBoardModeProps = {
   mode: BoardMode;
@@ -34,6 +34,7 @@ export function BaselineBoardMode({
   onToggleRenderHeat,
 }: BaselineBoardModeProps) {
   appRenderCounter += 1;
+  const benchmarkDurationMs = getBenchmarkDurationMs();
 
   const [items, setItems] = useState<BoardItem[]>(() => createItems(itemCount, true));
   const [dragState, setDragState] = useState<DragState | null>(null);
@@ -137,7 +138,7 @@ export function BaselineBoardMode({
     setBenchmarkResult(null);
     resetBaselineRenderCounter();
     setIsBenchmarkRunning(true);
-    setBenchmarkStatus('Recording for 10 seconds. Drag one card diagonally now.');
+    setBenchmarkStatus(`Recording for ${Math.round(benchmarkDurationMs / 1000)} seconds. Drag one card diagonally now.`);
 
     benchmarkTimeoutRef.current = window.setTimeout(() => {
       const latestStats = statsRef.current;
@@ -152,7 +153,7 @@ export function BaselineBoardMode({
         pointerUpdates: latestStats.pointerUpdates,
       });
       setBenchmarkStatus('Run complete. Record FPS, frame time, renders, and pointer updates.');
-    }, BENCHMARK_DURATION_MS);
+    }, benchmarkDurationMs);
   };
 
   return (
@@ -176,6 +177,7 @@ export function BaselineBoardMode({
         <BenchmarkPanel
           mode={mode}
           itemCount={items.length}
+          durationMs={benchmarkDurationMs}
           status={benchmarkStatus}
           isRunning={isBenchmarkRunning}
           result={benchmarkResult}
