@@ -21,6 +21,8 @@ pnpm-debug.log*
 *.tsbuildinfo
 .vite/
 .cache/
+test-results/
+playwright-report/
 
 # OS and editor files
 .DS_Store
