@@ -96,10 +96,22 @@ export function OptimizedBoardMode({
     };
   }, [updateViewport]);
 
+  const visibleItems = useMemo(
+    () =>
+      items.filter(
+        (item) =>
+          item.x + item.width >= viewport.left - VIEWPORT_BUFFER &&
+          item.x <= viewport.right + VIEWPORT_BUFFER &&
+          item.y + item.height >= viewport.top - VIEWPORT_BUFFER &&
+          item.y <= viewport.bottom + VIEWPORT_BUFFER,
+      ),
+    [items, viewport],
+  );
+
   const neighborCounts = useMemo(() => {
     const counts = new Map<number, number>();
 
-    for (const item of items) {
+    for (const item of visibleItems) {
       let count = 0;
 
       for (const candidate of items) {
@@ -112,19 +124,7 @@ export function OptimizedBoardMode({
     }
 
     return counts;
-  }, [items]);
-
-  const visibleItems = useMemo(
-    () =>
-      items.filter(
-        (item) =>
-          item.x + item.width >= viewport.left - VIEWPORT_BUFFER &&
-          item.x <= viewport.right + VIEWPORT_BUFFER &&
-          item.y + item.height >= viewport.top - VIEWPORT_BUFFER &&
-          item.y <= viewport.bottom + VIEWPORT_BUFFER,
-      ),
-    [items, viewport],
-  );
+  }, [items, visibleItems]);
 
   const stats: BoardStats = {
     renderCount: optimizedRenderCounter,
