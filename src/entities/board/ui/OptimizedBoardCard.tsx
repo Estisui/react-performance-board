@@ -1,4 +1,5 @@
 import { CSSProperties, memo, PointerEvent, useRef } from 'react';
+import { incrementCardRenderCount } from '../../../shared/lib/performance';
 import { BoardItem } from '../model/types';
 
 type OptimizedBoardCardProps = {
@@ -20,6 +21,7 @@ export const OptimizedBoardCard = memo(function OptimizedBoardCard({
 }: OptimizedBoardCardProps) {
   const renderCount = useRef(0);
   renderCount.current += 1;
+  incrementCardRenderCount('optimized');
 
   const heatClassName = showRenderHeat ? 'renderHeat' : '';
   const heatHue = 150 + ((renderCount.current + item.id) % 5) * 16;
@@ -53,4 +55,3 @@ export const OptimizedBoardCard = memo(function OptimizedBoardCard({
     </article>
   );
 });
-

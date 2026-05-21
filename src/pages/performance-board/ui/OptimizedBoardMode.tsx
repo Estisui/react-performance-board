@@ -2,8 +2,9 @@ import { PointerEvent, useCallback, useEffect, useMemo, useRef, useState } from 
 import { BOARD_HEIGHT, BOARD_WIDTH, createItems, OptimizedBoard } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
 import type { BoardMode } from '../../../shared/config/boardMode';
-import { useFrameMetrics } from '../../../shared/lib/performance';
+import { getCardRenderCount, resetCardRenderCount, useFrameMetrics } from '../../../shared/lib/performance';
 import { BenchmarkPanel } from '../../../widgets/benchmark-panel';
+import type { BenchmarkResult } from '../../../widgets/benchmark-panel/ui/BenchmarkPanel';
 import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
 
@@ -29,6 +30,7 @@ type OptimizedBoardModeProps = {
 
 export function resetOptimizedRenderCounter() {
   optimizedRenderCounter = 0;
+  resetCardRenderCount('optimized');
 }
 
 export function OptimizedBoardMode({
@@ -47,6 +49,7 @@ export function OptimizedBoardMode({
   const [pointerUpdates, setPointerUpdates] = useState(0);
   const [isBenchmarkRunning, setIsBenchmarkRunning] = useState(false);
   const [benchmarkStatus, setBenchmarkStatus] = useState('Start a 10-second manual run, then drag one card.');
+  const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkResult | null>(null);
   const [viewport, setViewport] = useState<ViewportRect>({
     left: 0,
     top: 0,
@@ -125,6 +128,7 @@ export function OptimizedBoardMode({
 
   const stats: BoardStats = {
     renderCount: optimizedRenderCounter,
+    cardRenders: getCardRenderCount('optimized'),
     pointerUpdates,
     fps: frameMetrics.fps,
     averageFrameMs: frameMetrics.averageFrameMs,
@@ -134,6 +138,8 @@ export function OptimizedBoardMode({
     selectedId,
     draggingId: dragState?.itemId ?? null,
   };
+  const statsRef = useRef(stats);
+  statsRef.current = stats;
 
   const flushDragUpdate = useCallback(() => {
     dragFrameRef.current = null;
@@ -231,16 +237,27 @@ export function OptimizedBoardMode({
     setPointerUpdates(0);
     setSelectedId(null);
     setDragState(null);
+    setBenchmarkResult(null);
     dragStateRef.current = null;
     latestPointerRef.current = null;
+    resetOptimizedRenderCounter();
     setIsBenchmarkRunning(true);
     setBenchmarkStatus('Recording for 10 seconds. Drag one card diagonally now.');
 
     benchmarkTimeoutRef.current = window.setTimeout(() => {
+      const latestStats = statsRef.current;
       setIsBenchmarkRunning(false);
       setDragState(null);
       dragStateRef.current = null;
       latestPointerRef.current = null;
+      setBenchmarkResult({
+        fps: latestStats.fps,
+        averageFrameMs: latestStats.averageFrameMs,
+        maxFrameMs: latestStats.maxFrameMs,
+        appRenders: latestStats.renderCount,
+        cardRenders: latestStats.cardRenders,
+        pointerUpdates: latestStats.pointerUpdates,
+      });
       setBenchmarkStatus('Run complete. Record FPS, frame time, renders, and pointer updates.');
     }, BENCHMARK_DURATION_MS);
   }, [isBenchmarkRunning]);
@@ -271,6 +288,7 @@ export function OptimizedBoardMode({
           itemCount={items.length}
           status={benchmarkStatus}
           isRunning={isBenchmarkRunning}
+          result={benchmarkResult}
           showRenderHeat={showRenderHeat}
           onToggleRenderHeat={onToggleRenderHeat}
           onRunBenchmark={handleRunBenchmark}

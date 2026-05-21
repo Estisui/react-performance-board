@@ -21,6 +21,7 @@ export type DragState = {
 
 export type BoardStats = {
   renderCount: number;
+  cardRenders: number;
   pointerUpdates: number;
   fps: number;
   averageFrameMs: number;

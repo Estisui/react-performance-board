@@ -2,8 +2,9 @@ import { PointerEvent, useEffect, useRef, useState } from 'react';
 import { Board, createItems, BOARD_HEIGHT, BOARD_WIDTH } from '../../../entities/board';
 import { BoardItem, BoardStats, DragState } from '../../../entities/board/model/types';
 import type { BoardMode } from '../../../shared/config/boardMode';
-import { useFrameMetrics } from '../../../shared/lib/performance';
+import { getCardRenderCount, resetCardRenderCount, useFrameMetrics } from '../../../shared/lib/performance';
 import { BenchmarkPanel } from '../../../widgets/benchmark-panel';
+import type { BenchmarkResult } from '../../../widgets/benchmark-panel/ui/BenchmarkPanel';
 import { MetricsPanel } from '../../../widgets/metrics-panel';
 import { Toolbar } from '../../../widgets/toolbar';
 
@@ -21,6 +22,7 @@ type BaselineBoardModeProps = {
 
 export function resetBaselineRenderCounter() {
   appRenderCounter = 0;
+  resetCardRenderCount('baseline');
 }
 
 export function BaselineBoardMode({
@@ -39,6 +41,7 @@ export function BaselineBoardMode({
   const [pointerUpdates, setPointerUpdates] = useState(0);
   const [isBenchmarkRunning, setIsBenchmarkRunning] = useState(false);
   const [benchmarkStatus, setBenchmarkStatus] = useState('Start a 10-second manual run, then drag one card.');
+  const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkResult | null>(null);
   const frameMetrics = useFrameMetrics();
   const boardRef = useRef<HTMLDivElement | null>(null);
   const benchmarkTimeoutRef = useRef<number | null>(null);
@@ -53,6 +56,7 @@ export function BaselineBoardMode({
 
   const stats: BoardStats = {
     renderCount: appRenderCounter,
+    cardRenders: getCardRenderCount('baseline'),
     pointerUpdates,
     fps: frameMetrics.fps,
     averageFrameMs: frameMetrics.averageFrameMs,
@@ -61,6 +65,8 @@ export function BaselineBoardMode({
     selectedId,
     draggingId: dragState?.itemId ?? null,
   };
+  const statsRef = useRef(stats);
+  statsRef.current = stats;
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (!dragState || !boardRef.current) {
@@ -128,12 +134,23 @@ export function BaselineBoardMode({
     setPointerUpdates(0);
     setSelectedId(null);
     setDragState(null);
+    setBenchmarkResult(null);
+    resetBaselineRenderCounter();
     setIsBenchmarkRunning(true);
     setBenchmarkStatus('Recording for 10 seconds. Drag one card diagonally now.');
 
     benchmarkTimeoutRef.current = window.setTimeout(() => {
+      const latestStats = statsRef.current;
       setIsBenchmarkRunning(false);
       setDragState(null);
+      setBenchmarkResult({
+        fps: latestStats.fps,
+        averageFrameMs: latestStats.averageFrameMs,
+        maxFrameMs: latestStats.maxFrameMs,
+        appRenders: latestStats.renderCount,
+        cardRenders: latestStats.cardRenders,
+        pointerUpdates: latestStats.pointerUpdates,
+      });
       setBenchmarkStatus('Run complete. Record FPS, frame time, renders, and pointer updates.');
     }, BENCHMARK_DURATION_MS);
   };
@@ -161,6 +178,7 @@ export function BaselineBoardMode({
           itemCount={items.length}
           status={benchmarkStatus}
           isRunning={isBenchmarkRunning}
+          result={benchmarkResult}
           showRenderHeat={showRenderHeat}
           onToggleRenderHeat={onToggleRenderHeat}
           onRunBenchmark={handleRunBenchmark}

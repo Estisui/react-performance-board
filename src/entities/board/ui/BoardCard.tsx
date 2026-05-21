@@ -1,4 +1,5 @@
 import { CSSProperties, PointerEvent, useRef } from 'react';
+import { incrementCardRenderCount } from '../../../shared/lib/performance';
 import { addSyntheticRenderCost } from '../model/renderCost';
 import { BoardItem, BoardStats } from '../model/types';
 
@@ -13,6 +14,7 @@ type BoardCardProps = {
 export function BoardCard({ item, stats, allItems, onStartDrag, showRenderHeat }: BoardCardProps) {
   const renderCount = useRef(0);
   renderCount.current += 1;
+  incrementCardRenderCount('baseline');
 
   addSyntheticRenderCost(item, stats);
   const isSelected = stats.selectedId === item.id;

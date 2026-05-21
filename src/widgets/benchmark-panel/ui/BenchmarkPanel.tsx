@@ -5,9 +5,19 @@ type BenchmarkPanelProps = {
   itemCount: number;
   status: string;
   isRunning: boolean;
+  result: BenchmarkResult | null;
   showRenderHeat: boolean;
   onToggleRenderHeat: () => void;
   onRunBenchmark: () => void;
+};
+
+export type BenchmarkResult = {
+  fps: number;
+  averageFrameMs: number;
+  maxFrameMs: number;
+  appRenders: number;
+  cardRenders: number;
+  pointerUpdates: number;
 };
 
 const MODE_LABELS: Record<BoardMode, string> = {
@@ -20,6 +30,7 @@ export function BenchmarkPanel({
   itemCount,
   status,
   isRunning,
+  result,
   showRenderHeat,
   onToggleRenderHeat,
   onRunBenchmark,
@@ -41,6 +52,34 @@ export function BenchmarkPanel({
           <input type="checkbox" checked={showRenderHeat} onChange={onToggleRenderHeat} />
           <span>Show render heat</span>
         </label>
+        {result && (
+          <dl className="benchmarkResult">
+            <div>
+              <dt>FPS</dt>
+              <dd>{result.fps}</dd>
+            </div>
+            <div>
+              <dt>Avg frame</dt>
+              <dd>{result.averageFrameMs} ms</dd>
+            </div>
+            <div>
+              <dt>Max frame</dt>
+              <dd>{result.maxFrameMs} ms</dd>
+            </div>
+            <div>
+              <dt>App renders</dt>
+              <dd>{result.appRenders}</dd>
+            </div>
+            <div>
+              <dt>Card renders</dt>
+              <dd>{result.cardRenders}</dd>
+            </div>
+            <div>
+              <dt>Pointer updates</dt>
+              <dd>{result.pointerUpdates}</dd>
+            </div>
+          </dl>
+        )}
         <p className="benchmarkStatus">{status}</p>
       </div>
     </aside>

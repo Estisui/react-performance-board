@@ -25,6 +25,10 @@ export function MetricsPanel({ mode, stats }: MetricsPanelProps) {
           <dd>{stats.renderCount}</dd>
         </div>
         <div>
+          <dt>Card renders</dt>
+          <dd>{stats.cardRenders}</dd>
+        </div>
+        <div>
           <dt>Pointer updates</dt>
           <dd>{stats.pointerUpdates}</dd>
         </div>
