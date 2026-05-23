@@ -43,6 +43,7 @@ export function OptimizedBoardMode({
 }: OptimizedBoardModeProps) {
   optimizedRenderCounter += 1;
   const benchmarkDurationMs = getBenchmarkDurationMs();
+  const visualMode = new URLSearchParams(window.location.search).get('visualMode') === 'measurement' ? 'measurement' : 'full';
 
   const [items, setItems] = useState<BoardItem[]>(() => createItems(itemCount, true));
   const [dragState, setDragState] = useState<DragState | null>(null);
@@ -264,7 +265,7 @@ export function OptimizedBoardMode({
   }, [isBenchmarkRunning]);
 
   return (
-    <main className="appShell" data-mode={mode}>
+    <main className="appShell" data-mode={mode} data-visual-mode={visualMode}>
       <Toolbar
         mode={mode}
         itemCount={items.length}

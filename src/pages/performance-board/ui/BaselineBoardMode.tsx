@@ -34,6 +34,7 @@ export function BaselineBoardMode({
   onToggleRenderHeat,
 }: BaselineBoardModeProps) {
   appRenderCounter += 1;
+  const visualMode = new URLSearchParams(window.location.search).get('visualMode') === 'measurement' ? 'measurement' : 'full';
   const benchmarkDurationMs = getBenchmarkDurationMs();
 
   const [items, setItems] = useState<BoardItem[]>(() => createItems(itemCount, true));
@@ -157,7 +158,7 @@ export function BaselineBoardMode({
   };
 
   return (
-    <main className="appShell" data-mode={mode}>
+    <main className="appShell" data-mode={mode} data-visual-mode={visualMode}>
       <Toolbar
         mode={mode}
         itemCount={items.length}

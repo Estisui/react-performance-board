@@ -45,7 +45,7 @@ const SCENARIOS: Array<{ mode: Mode; preset: 'Light' | 'Standard' | 'Stress'; it
 test.describe.serial('performance board benchmark', () => {
   for (const scenario of SCENARIOS) {
     test(`${scenario.mode} ${scenario.itemCount}`, async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/?visualMode=measurement');
       await page.getByRole('button', { name: scenario.mode }).click();
       await page.getByRole('button', { name: new RegExp(`^${scenario.preset}\\s+${scenario.itemCount}$`) }).click();
       await expect(page.getByRole('button', { name: scenario.preset })).toHaveAttribute('aria-pressed', 'true');
@@ -73,8 +73,8 @@ test.describe.serial('performance board benchmark', () => {
         y: Math.max(viewportBox.y + 120, startY - 60),
       };
       const rightTarget = {
-        x: Math.min(viewportBox.x + viewportBox.width - 170, startX + 760),
-        y: Math.min(viewportBox.y + viewportBox.height - 160, startY + 420),
+        x: Math.min(viewportBox.x + viewportBox.width - 110, startX + 1040),
+        y: Math.min(viewportBox.y + viewportBox.height - 110, startY + 600),
       };
 
       await page.mouse.move(startX, startY);
@@ -85,16 +85,16 @@ test.describe.serial('performance board benchmark', () => {
 
       let runComplete = false;
 
-      for (let sweep = 0; sweep < 20 && !runComplete; sweep += 1) {
+      for (let sweep = 0; sweep < 26 && !runComplete; sweep += 1) {
         const target = sweep % 2 === 0 ? rightTarget : leftTarget;
 
-        for (let step = 1; step <= 20 && !runComplete; step += 1) {
-          const progress = step / 20;
+        for (let step = 1; step <= 28 && !runComplete; step += 1) {
+          const progress = step / 28;
           await page.mouse.move(
             currentX + (target.x - currentX) * progress,
             currentY + (target.y - currentY) * progress,
           );
-          await page.waitForTimeout(30);
+          await page.waitForTimeout(12);
           runComplete = await page.getByText('Run complete').isVisible();
         }
 
@@ -109,7 +109,7 @@ test.describe.serial('performance board benchmark', () => {
       await appendBenchmarkRow({
         mode: scenario.mode.toLowerCase(),
         itemCount: scenario.itemCount,
-        run: 'playwright-sweep-short-1',
+        run: 'playwright-measurement-1',
         avgFps: result.FPS,
         minFps: '',
         avgFrameMs: stripMs(result['Avg frame']),
@@ -118,7 +118,7 @@ test.describe.serial('performance board benchmark', () => {
         cardRenders: result['Card renders'],
         pointerUpdates: result['Pointer updates'],
         hardware: 'MacBook M5',
-        notes: 'automated shorter continuous drag sweeps',
+        notes: 'automated aggressive drag with simplified measurement visuals',
       });
     });
   }
