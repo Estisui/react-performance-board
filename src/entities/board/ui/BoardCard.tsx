@@ -1,6 +1,5 @@
 import { CSSProperties, PointerEvent, useRef } from 'react';
 import { incrementCardRenderCount } from '../../../shared/lib/performance';
-import { addSyntheticRenderCost } from '../model/renderCost';
 import { BoardItem, BoardStats } from '../model/types';
 
 type BoardCardProps = {
@@ -16,7 +15,6 @@ export function BoardCard({ item, stats, allItems, onStartDrag, showRenderHeat }
   renderCount.current += 1;
   incrementCardRenderCount('baseline');
 
-  addSyntheticRenderCost(item, stats);
   const isSelected = stats.selectedId === item.id;
   const isDragging = stats.draggingId === item.id;
   const neighborCount = allItems.filter((candidate) => Math.abs(candidate.x - item.x) < 230).length;
