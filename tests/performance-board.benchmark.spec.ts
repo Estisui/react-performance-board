@@ -5,34 +5,46 @@ import { dirname, resolve } from 'node:path';
 type Mode = 'Baseline' | 'Optimized';
 
 type BenchmarkRow = {
+  runId: string;
+  hardware: string;
   mode: string;
   itemCount: number;
-  run: string;
   avgFps: string;
-  minFps: string;
   avgFrameMs: string;
   maxFrameMs: string;
   appRenders: string;
   cardRenders: string;
   pointerUpdates: string;
-  hardware: string;
-  notes: string;
+  buildMode: string;
+  visualMode: string;
+  browser: string;
+  viewport: string;
 };
 
-const OUTPUT_FILE = resolve('../diploma-react-performance/chapter-2/measurements/chapter-2-results.csv');
+const OUTPUT_FILE = resolve(
+  process.env.BENCHMARK_OUTPUT_FILE ??
+    '../diploma-react-performance/chapter-3/measurements/production-device-results.csv',
+);
+const RUN_ID = process.env.BENCHMARK_RUN_ID ?? 'playwright-production';
+const HARDWARE = process.env.BENCHMARK_HARDWARE ?? 'local-machine';
+const BUILD_MODE = 'production';
+const VISUAL_MODE = 'measurement';
+const VIEWPORT = '1440x900';
 const HEADER = [
+  'run_id',
+  'hardware',
   'mode',
   'item_count',
-  'run',
   'avg_fps',
-  'min_fps',
   'avg_frame_ms',
   'max_frame_ms',
   'app_renders',
   'card_renders',
   'pointer_updates',
-  'hardware',
-  'notes',
+  'build_mode',
+  'visual_mode',
+  'browser',
+  'viewport',
 ].join(',');
 
 const SCENARIOS: Array<{ mode: Mode; preset: 'Light' | 'Standard' | 'Stress'; itemCount: number }> = [
@@ -44,7 +56,7 @@ const SCENARIOS: Array<{ mode: Mode; preset: 'Light' | 'Standard' | 'Stress'; it
 
 test.describe.serial('performance board benchmark', () => {
   for (const scenario of SCENARIOS) {
-    test(`${scenario.mode} ${scenario.itemCount}`, async ({ page }) => {
+    test(`${scenario.mode} ${scenario.itemCount}`, async ({ page, browserName }) => {
       await page.goto('/?visualMode=measurement');
       await page.getByRole('button', { name: scenario.mode }).click();
       await page.getByRole('button', { name: new RegExp(`^${scenario.preset}\\s+${scenario.itemCount}$`) }).click();
@@ -107,18 +119,20 @@ test.describe.serial('performance board benchmark', () => {
 
       const result = await readBenchmarkResult(page);
       await appendBenchmarkRow({
+        runId: RUN_ID,
+        hardware: HARDWARE,
         mode: scenario.mode.toLowerCase(),
         itemCount: scenario.itemCount,
-        run: 'playwright-production-1',
         avgFps: result.FPS,
-        minFps: '',
         avgFrameMs: stripMs(result['Avg frame']),
         maxFrameMs: stripMs(result['Max frame']),
         appRenders: result['App renders'],
         cardRenders: result['Card renders'],
         pointerUpdates: result['Pointer updates'],
-        hardware: 'MacBook M5',
-        notes: 'production build benchmark with simplified measurement visuals',
+        buildMode: BUILD_MODE,
+        visualMode: VISUAL_MODE,
+        browser: browserName,
+        viewport: VIEWPORT,
       });
     });
   }
@@ -151,19 +165,21 @@ async function appendBenchmarkRow(row: BenchmarkRow) {
   }
 
   const line = [
+    row.runId,
+    row.hardware,
     row.mode,
     row.itemCount,
-    row.run,
     row.avgFps,
-    row.minFps,
     row.avgFrameMs,
     row.maxFrameMs,
     row.appRenders,
     row.cardRenders,
     row.pointerUpdates,
-    row.hardware,
-    row.notes,
-  ].join(',');
+    row.buildMode,
+    row.visualMode,
+    row.browser,
+    row.viewport,
+  ].map(csvCell).join(',');
 
   const next = existing.trim().length > 0 ? `${existing.trim()}\n${line}\n` : `${HEADER}\n${line}\n`;
   await writeFile(OUTPUT_FILE, next);
@@ -171,4 +187,9 @@ async function appendBenchmarkRow(row: BenchmarkRow) {
 
 function stripMs(value: string) {
   return value.replace(/\s*ms$/, '');
+}
+
+function csvCell(value: string | number) {
+  const text = String(value);
+  return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
