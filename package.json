@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "benchmark": "playwright test",
-    "benchmark:headed": "playwright test --headed",
-    "benchmark:ui": "playwright test --ui"
+    "benchmark": "npm run build && playwright test",
+    "benchmark:dev": "playwright test",
+    "benchmark:headed": "npm run build && playwright test --headed",
+    "benchmark:ui": "npm run build && playwright test --ui"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

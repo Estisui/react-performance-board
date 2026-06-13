@@ -19,7 +19,7 @@ type BenchmarkRow = {
   notes: string;
 };
 
-const OUTPUT_FILE = resolve('../diploma-react-performance/measurements/chapter-2-results.csv');
+const OUTPUT_FILE = resolve('../diploma-react-performance/chapter-2/measurements/chapter-2-results.csv');
 const HEADER = [
   'mode',
   'item_count',
@@ -109,7 +109,7 @@ test.describe.serial('performance board benchmark', () => {
       await appendBenchmarkRow({
         mode: scenario.mode.toLowerCase(),
         itemCount: scenario.itemCount,
-        run: 'playwright-measurement-1',
+        run: 'playwright-production-1',
         avgFps: result.FPS,
         minFps: '',
         avgFrameMs: stripMs(result['Avg frame']),
@@ -118,7 +118,7 @@ test.describe.serial('performance board benchmark', () => {
         cardRenders: result['Card renders'],
         pointerUpdates: result['Pointer updates'],
         hardware: 'MacBook M5',
-        notes: 'automated aggressive drag with simplified measurement visuals',
+        notes: 'production build benchmark with simplified measurement visuals',
       });
     });
   }
