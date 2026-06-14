@@ -1,0 +1,19 @@
+hardware,mode,item_count,run_count,avg_fps,avg_frame_ms,max_frame_ms,app_renders,card_renders,pointer_updates,build_mode,visual_mode,browser,viewport
+AMD Ryzen 5 3500U,baseline,180,3,32.7,30.8,88.9,61.3,10860.0,42.0,production,measurement,chromium,1440x900
+AMD Ryzen 5 3500U,optimized,180,3,31.7,31.8,94.5,82.3,380.7,65.7,production,measurement,chromium,1440x900
+AMD Ryzen 5 3500U,baseline,420,3,22.3,46.0,233.3,31.0,12600.0,11.7,production,measurement,chromium,1440x900
+AMD Ryzen 5 3500U,optimized,420,3,32.3,30.9,88.9,88.7,413.0,71.7,production,measurement,chromium,1440x900
+AMD Ryzen 5 3500U,baseline,800,3,6.0,164.1,938.9,18.0,13600.0,2.3,production,measurement,chromium,1440x900
+AMD Ryzen 5 3500U,optimized,800,3,31.3,33.0,83.4,84.3,384.7,66.0,production,measurement,chromium,1440x900
+Apple M5,baseline,180,3,60.0,16.7,17.2,308.7,55380.0,299.0,production,measurement,chromium,1440x900
+Apple M5,optimized,180,3,60.0,16.7,17.7,308.7,1768.0,299.0,production,measurement,chromium,1440x900
+Apple M5,baseline,420,3,60.0,16.7,17.6,206.0,86100.0,196.3,production,measurement,chromium,1440x900
+Apple M5,optimized,420,3,60.0,16.7,17.6,306.7,1768.0,299.0,production,measurement,chromium,1440x900
+Apple M5,baseline,800,3,58.0,17.2,33.3,123.3,97866.7,104.0,production,measurement,chromium,1440x900
+Apple M5,optimized,800,3,60.0,16.7,17.6,308.3,1768.0,299.0,production,measurement,chromium,1440x900
+Core i3-12100F,baseline,180,3,59.7,16.8,22.3,162.7,29100.0,146.3,production,measurement,chromium,1440x900
+Core i3-12100F,optimized,180,3,59.7,16.8,22.3,195.7,1063.0,180.3,production,measurement,chromium,1440x900
+Core i3-12100F,baseline,420,3,56.0,17.8,33.4,109.0,45360.0,91.7,production,measurement,chromium,1440x900
+Core i3-12100F,optimized,420,3,59.7,16.8,22.3,192.0,1028.7,175.0,production,measurement,chromium,1440x900
+Core i3-12100F,baseline,800,3,35.0,28.5,122.3,62.7,49333.3,42.7,production,measurement,chromium,1440x900
+Core i3-12100F,optimized,800,3,60.0,16.7,16.8,190.3,1037.7,176.0,production,measurement,chromium,1440x900
