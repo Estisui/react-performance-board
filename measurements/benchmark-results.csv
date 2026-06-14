@@ -35,3 +35,21 @@ i3-12100f-production-3,Core i3-12100F,baseline,420,56,17.8,33.4,109,45360,90,pro
 i3-12100f-production-3,Core i3-12100F,optimized,420,60,16.7,16.8,191,1020,174,production,measurement,chromium,1440x900
 i3-12100f-production-3,Core i3-12100F,baseline,800,36,27.5,116.8,62,48800,43,production,measurement,chromium,1440x900
 i3-12100f-production-3,Core i3-12100F,optimized,800,60,16.7,16.8,190,1020,174,production,measurement,chromium,1440x900
+ryzen-3500u-production-1,AMD Ryzen 5 3500U,baseline,180,31,32.5,100,59,10440,38,production,measurement,chromium,1440x900
+ryzen-3500u-production-1,AMD Ryzen 5 3500U,optimized,180,31,32.5,100,77,346,60,production,measurement,chromium,1440x900
+ryzen-3500u-production-1,AMD Ryzen 5 3500U,baseline,420,20,50.8,216.7,31,12600,12,production,measurement,chromium,1440x900
+ryzen-3500u-production-1,AMD Ryzen 5 3500U,optimized,420,32,31.1,83.3,84,394,68,production,measurement,chromium,1440x900
+ryzen-3500u-production-1,AMD Ryzen 5 3500U,baseline,800,6,167.5,833.3,18,13600,2,production,measurement,chromium,1440x900
+ryzen-3500u-production-1,AMD Ryzen 5 3500U,optimized,800,34,29.4,66.7,90,407,70,production,measurement,chromium,1440x900
+ryzen-3500u-production-2,AMD Ryzen 5 3500U,baseline,180,35,28.6,83.4,65,11520,47,production,measurement,chromium,1440x900
+ryzen-3500u-production-2,AMD Ryzen 5 3500U,optimized,180,34,29.2,66.7,90,426,72,production,measurement,chromium,1440x900
+ryzen-3500u-production-2,AMD Ryzen 5 3500U,baseline,420,21,48.1,266.6,34,13860,14,production,measurement,chromium,1440x900
+ryzen-3500u-production-2,AMD Ryzen 5 3500U,optimized,420,32,31.7,83.4,94,432,75,production,measurement,chromium,1440x900
+ryzen-3500u-production-2,AMD Ryzen 5 3500U,baseline,800,6,170,1183.3,17,12800,2,production,measurement,chromium,1440x900
+ryzen-3500u-production-2,AMD Ryzen 5 3500U,optimized,800,25,40.6,116.8,71,340,58,production,measurement,chromium,1440x900
+ryzen-3500u-production-3,AMD Ryzen 5 3500U,baseline,180,32,31.4,83.4,60,10620,41,production,measurement,chromium,1440x900
+ryzen-3500u-production-3,AMD Ryzen 5 3500U,optimized,180,30,33.6,116.7,80,370,65,production,measurement,chromium,1440x900
+ryzen-3500u-production-3,AMD Ryzen 5 3500U,baseline,420,26,39.2,216.7,28,11340,9,production,measurement,chromium,1440x900
+ryzen-3500u-production-3,AMD Ryzen 5 3500U,optimized,420,33,30,100,88,413,72,production,measurement,chromium,1440x900
+ryzen-3500u-production-3,AMD Ryzen 5 3500U,baseline,800,6,154.7,800,19,14400,3,production,measurement,chromium,1440x900
+ryzen-3500u-production-3,AMD Ryzen 5 3500U,optimized,800,35,28.9,66.8,92,407,70,production,measurement,chromium,1440x900
