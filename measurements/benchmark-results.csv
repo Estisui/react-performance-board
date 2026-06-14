@@ -1,19 +1,19 @@
 run_id,hardware,mode,item_count,avg_fps,avg_frame_ms,max_frame_ms,app_renders,card_renders,pointer_updates,build_mode,visual_mode,browser,viewport
-macbook-m5-production-1,Apple M5,baseline,180,60,16.7,16.7,309,55440,297,production,measurement,chromium,1440x900
-macbook-m5-production-1,Apple M5,optimized,180,60,16.7,17.6,303,1768,299,production,measurement,chromium,1440x900
-macbook-m5-production-1,Apple M5,baseline,420,60,16.7,17.6,208,86940,196,production,measurement,chromium,1440x900
-macbook-m5-production-1,Apple M5,optimized,420,60,16.7,17.6,310,1768,299,production,measurement,chromium,1440x900
-macbook-m5-production-1,Apple M5,baseline,800,57,17.5,33.4,125,99200,107,production,measurement,chromium,1440x900
-macbook-m5-production-1,Apple M5,optimized,800,60,16.7,17.7,307,1768,299,production,measurement,chromium,1440x900
-i3-12100f-production-1,Core i3-12100F,baseline,180,60,16.7,16.8,166,29700,149,production,measurement,chromium,1440x900
-i3-12100f-production-1,Core i3-12100F,optimized,180,60,16.7,16.8,196,1056,179,production,measurement,chromium,1440x900
-i3-12100f-production-1,Core i3-12100F,baseline,420,56,17.8,33.4,110,45780,92,production,measurement,chromium,1440x900
-i3-12100f-production-1,Core i3-12100F,optimized,420,59,16.9,33.3,201,1100,187,production,measurement,chromium,1440x900
-i3-12100f-production-1,Core i3-12100F,baseline,800,36,27.8,116.7,60,47200,40,production,measurement,chromium,1440x900
-i3-12100f-production-1,Core i3-12100F,optimized,800,60,16.7,16.8,200,1081,184,production,measurement,chromium,1440x900
-AMD-Ryzen-5-3500U-production-1,AMD Ryzen 5 3500U,baseline,180,38,26.4,83.4,76,13500,57,production,measurement,chromium,1440x900
-AMD-Ryzen-5-3500U-production-1,AMD Ryzen 5 3500U,optimized,180,36,27.8,83.3,101,502,85,production,measurement,chromium,1440x900
-AMD-Ryzen-5-3500U-production-1,AMD Ryzen 5 3500U,baseline,420,30,33.3,133.3,44,18060,24,production,measurement,chromium,1440x900
-AMD-Ryzen-5-3500U-production-1,AMD Ryzen 5 3500U,optimized,420,34,29.7,66.8,98,465,80,production,measurement,chromium,1440x900
-AMD-Ryzen-5-3500U-production-1,AMD Ryzen 5 3500U,baseline,800,9,117.2,700,22,16800,4,production,measurement,chromium,1440x900
-AMD-Ryzen-5-3500U-production-1,AMD Ryzen 5 3500U,optimized,800,34,29.2,66.8,98,464,79,production,measurement,chromium,1440x900
+apple-m5-production-1,Apple M5,baseline,180,60,16.7,17.7,314,56340,299,production,measurement,chromium,1440x900
+apple-m5-production-1,Apple M5,optimized,180,60,16.7,17.7,307,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-1,Apple M5,baseline,420,60,16.7,17.6,205,85680,196,production,measurement,chromium,1440x900
+apple-m5-production-1,Apple M5,optimized,420,60,16.7,17.6,306,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-1,Apple M5,baseline,800,58,17.2,33.3,125,99200,105,production,measurement,chromium,1440x900
+apple-m5-production-1,Apple M5,optimized,800,60,16.7,17.6,311,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-2,Apple M5,baseline,180,60,16.7,16.8,309,55440,299,production,measurement,chromium,1440x900
+apple-m5-production-2,Apple M5,optimized,180,60,16.7,17.6,308,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-2,Apple M5,baseline,420,60,16.7,17.6,209,87360,196,production,measurement,chromium,1440x900
+apple-m5-production-2,Apple M5,optimized,420,60,16.7,17.6,307,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-2,Apple M5,baseline,800,57,17.5,33.4,121,96000,101,production,measurement,chromium,1440x900
+apple-m5-production-2,Apple M5,optimized,800,60,16.7,17.7,306,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-3,Apple M5,baseline,180,60,16.7,17,303,54360,299,production,measurement,chromium,1440x900
+apple-m5-production-3,Apple M5,optimized,180,60,16.7,17.7,311,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-3,Apple M5,baseline,420,60,16.7,17.6,204,85260,197,production,measurement,chromium,1440x900
+apple-m5-production-3,Apple M5,optimized,420,60,16.7,17.7,307,1768,299,production,measurement,chromium,1440x900
+apple-m5-production-3,Apple M5,baseline,800,59,16.9,33.2,124,98400,106,production,measurement,chromium,1440x900
+apple-m5-production-3,Apple M5,optimized,800,60,16.7,17.6,308,1768,299,production,measurement,chromium,1440x900
