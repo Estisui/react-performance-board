@@ -1,0 +1,7 @@
+run_id,hardware,mode,item_count,avg_fps,avg_frame_ms,max_frame_ms,app_renders,card_renders,pointer_updates,build_mode,visual_mode,browser,viewport
+macbook-m5-production-1,Apple M5,baseline,180,60,16.7,16.7,309,55440,297,production,measurement,chromium,1440x900
+macbook-m5-production-1,Apple M5,optimized,180,60,16.7,17.6,303,1768,299,production,measurement,chromium,1440x900
+macbook-m5-production-1,Apple M5,baseline,420,60,16.7,17.6,208,86940,196,production,measurement,chromium,1440x900
+macbook-m5-production-1,Apple M5,optimized,420,60,16.7,17.6,310,1768,299,production,measurement,chromium,1440x900
+macbook-m5-production-1,Apple M5,baseline,800,57,17.5,33.4,125,99200,107,production,measurement,chromium,1440x900
+macbook-m5-production-1,Apple M5,optimized,800,60,16.7,17.7,307,1768,299,production,measurement,chromium,1440x900

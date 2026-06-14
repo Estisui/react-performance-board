@@ -23,7 +23,7 @@ type BenchmarkRow = {
 
 const OUTPUT_FILE = resolve(
   process.env.BENCHMARK_OUTPUT_FILE ??
-    '../diploma-react-performance/chapter-3/measurements/production-device-results.csv',
+    './measurements/benchmark-results.csv',
 );
 const RUN_ID = process.env.BENCHMARK_RUN_ID ?? 'playwright-production';
 const HARDWARE = process.env.BENCHMARK_HARDWARE ?? 'local-machine';
