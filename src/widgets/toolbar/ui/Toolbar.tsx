@@ -65,6 +65,15 @@ export function Toolbar({ mode, itemCount, onModeChange, onGenerate }: ToolbarPr
             <span className="presetName">Stress</span>
             <span className="presetValue">420</span>
           </button>
+          <button
+            type="button"
+            className={`presetButton ${itemCount === 800 ? 'active' : ''}`}
+            aria-pressed={itemCount === 800}
+            onClick={() => onGenerate(800)}
+          >
+            <span className="presetName">Extreme</span>
+            <span className="presetValue">800</span>
+          </button>
         </div>
       </div>
     </header>

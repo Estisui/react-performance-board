@@ -47,11 +47,13 @@ const HEADER = [
   'viewport',
 ].join(',');
 
-const SCENARIOS: Array<{ mode: Mode; preset: 'Light' | 'Standard' | 'Stress'; itemCount: number }> = [
+const SCENARIOS: Array<{ mode: Mode; preset: 'Light' | 'Standard' | 'Stress' | 'Extreme'; itemCount: number }> = [
   { mode: 'Baseline', preset: 'Standard', itemCount: 180 },
   { mode: 'Optimized', preset: 'Standard', itemCount: 180 },
   { mode: 'Baseline', preset: 'Stress', itemCount: 420 },
   { mode: 'Optimized', preset: 'Stress', itemCount: 420 },
+  { mode: 'Baseline', preset: 'Extreme', itemCount: 800 },
+  { mode: 'Optimized', preset: 'Extreme', itemCount: 800 },
 ];
 
 test.describe.serial('performance board benchmark', () => {

@@ -1,7 +1,7 @@
 import { BoardItem, BoardItemKind } from './types';
 
 export const BOARD_WIDTH = 2800;
-export const BOARD_HEIGHT = 1700;
+export const BOARD_HEIGHT = 5000;
 export const DEFAULT_ITEM_COUNT = 180;
 
 const ITEM_COLORS = [
